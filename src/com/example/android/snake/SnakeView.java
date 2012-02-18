@@ -70,6 +70,7 @@ public class SnakeView extends TileView {
     private static final int RED_STAR = 1;
     private static final int YELLOW_STAR = 2;
     private static final int GREEN_STAR = 3;
+    private static final int SNAKE_HEAD = 4;
 
     /**
      * mScore: used to track the number of apples captured mMoveDelay: number of
@@ -151,10 +152,11 @@ public class SnakeView extends TileView {
         setFocusable(true);
 
         Resources r = this.getContext().getResources();
-        resetTiles(4);
-        loadTile(RED_STAR, r.getDrawable(R.drawable.redstar));
+        resetTiles(5);
+        loadTile(RED_STAR, r.getDrawable(R.drawable.greenstar));
         loadTile(YELLOW_STAR, r.getDrawable(R.drawable.yellowstar));
-        loadTile(GREEN_STAR, r.getDrawable(R.drawable.greenstar));
+        loadTile(GREEN_STAR, r.getDrawable(R.drawable.redstar));
+        loadTile(SNAKE_HEAD, r.getDrawable(R.drawable.snake_head));
     }
     
     public int getMode(){
@@ -556,7 +558,8 @@ public class SnakeView extends TileView {
         int index = 0;
         for (Coordinate c : mSnakeTrail) {
             if (index == 0) {
-                setTile(YELLOW_STAR, c.x, c.y);
+            	// HEAD
+                setTile(SNAKE_HEAD, c.x, c.y);
             } else {
                 setTile(RED_STAR, c.x, c.y);
             }
