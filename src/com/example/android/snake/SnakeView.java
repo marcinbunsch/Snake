@@ -154,7 +154,7 @@ public class SnakeView extends TileView {
         setFocusable(true);
         
         biteSound = MediaPlayer.create(getContext(), R.raw.bite);
-        biteSound.setVolume(1.0f, 1.0f);
+        biteSound.setVolume(5.0f, 5.0f);
         Resources r = this.getContext().getResources();
         resetTiles(5);
         loadTile(RED_STAR, r.getDrawable(R.drawable.greenstar));
