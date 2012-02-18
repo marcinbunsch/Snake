@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="scoreColor">#66FFFFFF</color>
+    <color name="scoreShadowColor">#6600FF00</color>
+    
+</resources>

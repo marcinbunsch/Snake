@@ -26,8 +26,8 @@
                 />
 	
 	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent" >
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent">
 		
 		<TextView
 		 android:id="@+id/text"
@@ -44,12 +44,15 @@
 		    android:id="@+id/score"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:layout_alignParentRight="true"
-		    android:layout_alignParentTop="true"
-		    android:layout_marginRight="19dp"
-		    android:layout_marginTop="28dp"
-		    android:text="@string/initial_score" />
-
+		    android:layout_alignParentBottom="true"
+		    android:layout_marginBottom="20dp"
+			android:layout_centerInParent="true"
+		    android:text="@string/initial_score"
+		    android:textColor="@color/scoreColor"
+		    android:shadowColor="@color/scoreShadowColor"
+		    android:shadowRadius="2"
+		    android:textSize="48sp" />
+		
 		<Button
 		    android:id="@+id/tweet_button"
 		    android:visibility="gone"

@@ -68,7 +68,6 @@ public class Snake extends Activity {
            if (clickTime > 1000){
         	 togglePause();
            } else {
-        	   Log.d("kiszal", "jak sie masz");
         	 navigateSnake(event);
            }
       	}
@@ -108,7 +107,10 @@ public class Snake extends Activity {
 
 	private void togglePause() {
     	int currentMode = mSnakeView.getMode();
-    	if (currentMode == SnakeView.RUNNING ){
+
+    	if (currentMode == SnakeView.LOSE) {
+    	   // do nothing
+    	} else if (currentMode == SnakeView.RUNNING ){
     		mSnakeView.setMode(SnakeView.PAUSE);  		
     	} else if(currentMode == SnakeView.PAUSE) {
     		mSnakeView.setMode(SnakeView.RUNNING);
@@ -136,6 +138,8 @@ public class Snake extends Activity {
         mSnakeView.setScoreView((TextView) findViewById(R.id.score));
         mSnakeView.setTweetButton((Button) findViewById(R.id.tweet_button));
 
+        mSnakeView.setMode(SnakeView.READY);
+        
         if (savedInstanceState == null) {
             // We were just launched -- set up a new game
             mSnakeView.setMode(SnakeView.READY);
@@ -145,7 +149,7 @@ public class Snake extends Activity {
             if (map != null) {
                 mSnakeView.restoreState(map);
             } else {
-                mSnakeView.setMode(SnakeView.PAUSE);
+            	mSnakeView.setMode(SnakeView.READY);
             }
         }
     }
@@ -159,7 +163,14 @@ public class Snake extends Activity {
     protected void onPause() {
         super.onPause();
         // Pause the game along with the activity
-        mSnakeView.setMode(SnakeView.PAUSE);
+        
+    	int currentMode = mSnakeView.getMode();
+
+    	// Do not pause the game if we're on lose screen
+        if (currentMode != SnakeView.LOSE) {
+        	mSnakeView.setMode(SnakeView.PAUSE);
+        }
+        
     }
 
     @Override
