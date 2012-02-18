@@ -53,15 +53,18 @@
         android:shadowRadius="2"
         android:textSize="48sp" />
 
-    <ImageButton
-        android:id="@+id/tweet_button"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="19dp"
-        android:text="Tweet your Score!" />
-
+        <ImageButton
+            android:id="@+id/tweet_button"
+            android:visibility="visible"
+            android:src="@drawable/tweet_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="19dp"
+            android:background="@color/twitterButtonBg"
+            android:contentDescription="Twitter"
+          />
+        
   </RelativeLayout>
 </FrameLayout>
