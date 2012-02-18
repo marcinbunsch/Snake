@@ -145,12 +145,10 @@ public class SnakeView extends TileView {
         setFocusable(true);
 
         Resources r = this.getContext().getResources();
-        
         resetTiles(4);
         loadTile(RED_STAR, r.getDrawable(R.drawable.redstar));
         loadTile(YELLOW_STAR, r.getDrawable(R.drawable.yellowstar));
         loadTile(GREEN_STAR, r.getDrawable(R.drawable.greenstar));
-    	
     }
     
 
