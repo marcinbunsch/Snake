@@ -38,7 +38,7 @@ public class Snake extends Activity {
 
     /**
      * Called when Activity is first created. Turns off the title bar, sets up
-     * the content views, and fires up the SnakeView.
+     * the content views, and fires up the SnakeView. Better documentation.
      * 
      */
     @Override
