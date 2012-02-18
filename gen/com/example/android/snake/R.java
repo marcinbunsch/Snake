@@ -27,6 +27,7 @@ containing a value of this type.
         public static final int score=0x7f050002;
         public static final int snake=0x7f050000;
         public static final int text=0x7f050001;
+        public static final int tweet_button=0x7f050003;
     }
     public static final class layout {
         public static final int snake_layout=0x7f030000;

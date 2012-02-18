@@ -19,6 +19,7 @@ package com.example.android.snake;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -34,6 +35,7 @@ public class Snake extends Activity {
 
     private SnakeView mSnakeView;
     
+    
     private static String ICICLE_KEY = "snake-view";
 
     /**
@@ -47,10 +49,12 @@ public class Snake extends Activity {
         
         setContentView(R.layout.snake_layout);
         // mSnakeView is an instance of SnakeView
+       
         mSnakeView = (SnakeView) findViewById(R.id.snake);
         mSnakeView.setTextView((TextView) findViewById(R.id.text));
         mSnakeView.setScoreView((TextView) findViewById(R.id.score));
-        
+        mSnakeView.setTweetButton((Button) findViewById(R.id.tweet_button));
+        	
         if (savedInstanceState == null) {
             // We were just launched -- set up a new game
             mSnakeView.setMode(SnakeView.READY);

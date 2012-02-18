@@ -20,7 +20,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -28,6 +30,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -89,6 +92,8 @@ public class SnakeView extends TileView {
      * mScoreText: current score text box
      */
     private TextView mScoreText;
+
+    private Button tweetButton;
 
     
     /**
@@ -333,6 +338,19 @@ public class SnakeView extends TileView {
         mScoreText = newView;
     }
 
+    public void setTweetButton(Button newButton) {
+    	tweetButton = newButton;
+    
+    	tweetButton.setOnClickListener(new OnClickListener() {			
+			public void onClick(View v) {
+				String url = "http://twitter.com/intent?tweet=Awesome";
+				Intent intent = new Intent(Intent.ACTION_VIEW);
+		        intent.setData(Uri.parse(url));
+		        getContext().startActivity(Intent.createChooser(intent, "Tweet your score"));
+			}
+		});
+    }
+    
     /**
      * Updates the current mode of the application (RUNNING or PAUSED or the like)
      * as well as sets the visibility of textview for notification
@@ -345,6 +363,7 @@ public class SnakeView extends TileView {
 
         if (newMode == RUNNING & oldMode != RUNNING) {
             mStatusText.setVisibility(View.INVISIBLE);
+            tweetButton.setVisibility(View.GONE);
             update();
             return;
         }
@@ -360,6 +379,7 @@ public class SnakeView extends TileView {
         if (newMode == LOSE) {
             str = res.getString(R.string.mode_lose_prefix) + mScore
                   + res.getString(R.string.mode_lose_suffix);
+            tweetButton.setVisibility(View.VISIBLE);
         }
 
         mStatusText.setText(str);
