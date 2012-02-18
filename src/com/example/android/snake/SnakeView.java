@@ -156,7 +156,12 @@ public class SnakeView extends TileView {
         loadTile(GREEN_STAR, r.getDrawable(R.drawable.greenstar));
     }
     
+    public int getMode(){
 
+      return mMode;
+
+    }
+    
     private void initNewGame() {
         mSnakeTrail.clear();
         mAppleList.clear();
@@ -343,7 +348,7 @@ public class SnakeView extends TileView {
     
     	tweetButton.setOnClickListener(new OnClickListener() {			
 			public void onClick(View v) {
-				String url = "http://twitter.com/intent?tweet=Awesome";
+				String url = "https://twitter.com/intent/session?text=I+just+scored+" + mScore + "+on+Snake+on+Android+#awesomeness";
 				Intent intent = new Intent(Intent.ACTION_VIEW);
 		        intent.setData(Uri.parse(url));
 		        getContext().startActivity(Intent.createChooser(intent, "Tweet your score"));
