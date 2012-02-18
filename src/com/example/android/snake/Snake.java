@@ -44,9 +44,9 @@ public class Snake extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        
         setContentView(R.layout.snake_layout);
-
+        // mSnakeView is an instance of SnakeView
         mSnakeView = (SnakeView) findViewById(R.id.snake);
         mSnakeView.setTextView((TextView) findViewById(R.id.text));
         mSnakeView.setScoreView((TextView) findViewById(R.id.score));
