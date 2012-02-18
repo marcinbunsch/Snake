@@ -42,6 +42,7 @@ public class SnakeView extends TileView {
 
     private static final String TAG = "SnakeView";
 
+    
     /**
      * Current mode of application: READY to run, RUNNING, or you have already
      * lost. static final ints are used instead of an enum for performance
@@ -76,7 +77,7 @@ public class SnakeView extends TileView {
      * captured.
      */
     private long mScore = 0;
-    private long mMoveDelay = 600;
+    private long mMoveDelay;
     /**
      * mLastMove: tracks the absolute time when the snake last moved, and is used
      * to determine if a move should be made based on mMoveDelay.
@@ -182,7 +183,7 @@ public class SnakeView extends TileView {
         addRandomApple();
         addRandomApple();
 
-        mMoveDelay = 600;
+        mMoveDelay = 300;
         mScore = 0;
     }
 
@@ -250,7 +251,8 @@ public class SnakeView extends TileView {
      * @param icicle a Bundle containing the game state
      */
     public void restoreState(Bundle icicle) {
-        setMode(PAUSE);
+    	
+    	setMode(PAUSE);    		
 
         mAppleList = coordArrayToArrayList(icicle.getIntArray("mAppleList"));
         mDirection = icicle.getInt("mDirection");
@@ -348,7 +350,8 @@ public class SnakeView extends TileView {
     
     	tweetButton.setOnClickListener(new OnClickListener() {			
 			public void onClick(View v) {
-				String url = "https://twitter.com/intent/session?text=I+just+scored+" + mScore + "+on+Snake+on+Android+#awesomeness";
+				
+				String url = "https://mobile.twitter.com/home?status=I+just+scored+" + mScore + "+on+Snake+on+Android+%23awesomeness";
 				Intent intent = new Intent(Intent.ACTION_VIEW);
 		        intent.setData(Uri.parse(url));
 		        getContext().startActivity(Intent.createChooser(intent, "Tweet your score"));
@@ -377,9 +380,11 @@ public class SnakeView extends TileView {
         CharSequence str = "";
         if (newMode == PAUSE) {
             str = res.getText(R.string.mode_pause);
+            tweetButton.setVisibility(View.GONE);
         }
         if (newMode == READY) {
             str = res.getText(R.string.mode_ready);
+            tweetButton.setVisibility(View.GONE);
         }
         if (newMode == LOSE) {
             str = res.getString(R.string.mode_lose_prefix) + mScore
