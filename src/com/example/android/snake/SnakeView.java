@@ -191,6 +191,7 @@ public class SnakeView extends TileView {
 
         mMoveDelay = 300;
         mScore = 0;
+    	mScoreText.setText("" + mScore);
     }
 
 
