@@ -207,7 +207,7 @@ public class Snake extends Activity implements SensorEventListener {
 
   float[] gravity = new float[3];
   long lastMeasureTime = 0;
-  final int treshold = 500;
+  final int treshold = 600;
   public void onSensorChanged(SensorEvent event) {
     long currentMeasureTime = SystemClock.elapsedRealtime();
     int delta = (int) (currentMeasureTime - lastMeasureTime);
@@ -229,7 +229,7 @@ public class Snake extends Activity implements SensorEventListener {
 
         if (SnakeView.RUNNING == mSnakeView.getMode())
         {
-            if (Math.abs(linear_acceleration[0]) > 0.4 || Math.abs(linear_acceleration[1]) > 0.4)
+            if (Math.abs(linear_acceleration[0]) > 0.5 || Math.abs(linear_acceleration[1]) > 0.5)
             {
                 if (Math.abs(linear_acceleration[0]) < Math.abs(linear_acceleration[1]))
                 {
