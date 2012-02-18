@@ -21,7 +21,12 @@ import java.util.Date;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.graphics.Point;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -39,8 +44,9 @@ import android.widget.Button;;
  * faster. Running into yourself or the walls will end the game.
  * 
  */
-public class Snake extends Activity {
-
+public class Snake extends Activity implements SensorEventListener {
+	 private SensorManager mSensorManager = null;
+     private Sensor mAccelerometer = null;
 	
     private SnakeView mSnakeView;
     
@@ -57,21 +63,28 @@ public class Snake extends Activity {
     
     public boolean onTouchEvent(MotionEvent event) {
     	// TODO Auto-generated method stub
-    	
-    	if (event.getAction() == MotionEvent.ACTION_DOWN){
-    		downTime = new Date();
+    	if (SnakeView.READY == mSnakeView.getMode() && event.getAction() == MotionEvent.ACTION_UP)
+    	{
+    		mSnakeView.onKeyDown(KeyEvent.KEYCODE_DPAD_UP, new KeyEvent(KeyEvent.ACTION_DOWN, 
+      			  KeyEvent.KEYCODE_DPAD_UP));
+    	}
+    	else
+    	{
+        	if (event.getAction() == MotionEvent.ACTION_DOWN){
+        		downTime = new Date();
+        	}
+        	
+        	if (event.getAction() == MotionEvent.ACTION_UP){
+               Date upTime = new Date();
+               clickTime = upTime.getTime() - downTime.getTime();   
+               if (clickTime > 1000){
+            	 togglePause();
+               } else {
+            	 navigateSnake(event);
+               }
+          	}    		
     	}
     	
-    	if (event.getAction() == MotionEvent.ACTION_UP){
-           Date upTime = new Date();
-           clickTime = upTime.getTime() - downTime.getTime();   
-           if (clickTime > 1000){
-        	 togglePause();
-           } else {
-        	   Log.d("kiszal", "jak sie masz");
-        	 navigateSnake(event);
-           }
-      	}
         return super.onTouchEvent(event);
     }
     
@@ -124,6 +137,8 @@ public class Snake extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         getScreenDimensions();
 
         // No Title bar
@@ -156,8 +171,15 @@ public class Snake extends Activity {
     }
     
     @Override
+    protected void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+    
+    @Override
     protected void onPause() {
         super.onPause();
+        mSensorManager.unregisterListener(this);
         // Pause the game along with the activity
         mSnakeView.setMode(SnakeView.PAUSE);
     }
@@ -167,5 +189,68 @@ public class Snake extends Activity {
         //Store the game state
         outState.putBundle(ICICLE_KEY, mSnakeView.saveState());
     }
+
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// TODO Auto-generated method stub
+	}
+
+	float[] gravity = new float[3];
+	long lastMeasureTime = 0;
+	final int treshold = 500;
+	public void onSensorChanged(SensorEvent event) {
+		long currentMeasureTime = SystemClock.elapsedRealtime();
+		int delta = (int) (currentMeasureTime - lastMeasureTime);
+		lastMeasureTime = currentMeasureTime;
+		
+		delta = Math.min(delta, treshold);
+		
+		float[] linear_acceleration = new float[3];
+		float alpha = (float)delta/(float)treshold;
+
+        gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0];
+        gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1];
+        gravity[2] = alpha * gravity[2] + (1 - alpha) * event.values[2];
+        
+        linear_acceleration[0] = event.values[0] - gravity[0];
+        linear_acceleration[1] = event.values[1] - gravity[1];
+        linear_acceleration[2] = event.values[2] - gravity[2];
+        
+
+        if (SnakeView.RUNNING == mSnakeView.getMode())
+        {
+            if (Math.abs(linear_acceleration[0]) > 0.4 || Math.abs(linear_acceleration[1]) > 0.4)
+            {
+                if (Math.abs(linear_acceleration[0]) < Math.abs(linear_acceleration[1]))
+                {
+                	if (linear_acceleration[1] > 0)
+                	{
+                		mSnakeView.onKeyDown(KeyEvent.KEYCODE_DPAD_DOWN, new KeyEvent(KeyEvent.ACTION_DOWN,
+                    			  KeyEvent.KEYCODE_DPAD_DOWN));
+                	}
+                	else
+                	{
+                		mSnakeView.onKeyDown(KeyEvent.KEYCODE_DPAD_UP, new KeyEvent(KeyEvent.ACTION_DOWN, 
+                    			  KeyEvent.KEYCODE_DPAD_UP));
+                	}                	
+                }
+                else
+                {
+                	if (linear_acceleration[0] > 0)
+                	{
+                		mSnakeView.onKeyDown(KeyEvent.KEYCODE_DPAD_LEFT, new KeyEvent(KeyEvent.ACTION_DOWN, 
+                  			  KeyEvent.KEYCODE_DPAD_LEFT));
+                	}
+                	else
+                	{
+                		mSnakeView.onKeyDown(KeyEvent.KEYCODE_DPAD_RIGHT, new KeyEvent(KeyEvent.ACTION_DOWN, 
+                  			  KeyEvent.KEYCODE_DPAD_RIGHT));
+                	}
+
+                }
+            }
+        }
+
+
+	}
 
 }
