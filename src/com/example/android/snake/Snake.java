@@ -27,8 +27,8 @@ import android.view.Display;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Button;;
 
 /**
  * Snake: a simple game that everyone can enjoy.
@@ -136,7 +136,7 @@ public class Snake extends Activity {
         mSnakeView = (SnakeView) findViewById(R.id.snake);
         mSnakeView.setTextView((TextView) findViewById(R.id.text));
         mSnakeView.setScoreView((TextView) findViewById(R.id.score));
-        mSnakeView.setTweetButton((Button) findViewById(R.id.tweet_button));
+        mSnakeView.setTweetButton((ImageButton) findViewById(R.id.tweet_button));
 
         mSnakeView.setMode(SnakeView.READY);
         

@@ -30,7 +30,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 /**
@@ -94,7 +94,7 @@ public class SnakeView extends TileView {
      */
     private TextView mScoreText;
 
-    private Button tweetButton;
+    private ImageButton tweetButton;
 
     
     /**
@@ -345,8 +345,8 @@ public class SnakeView extends TileView {
         mScoreText = newView;
     }
 
-    public void setTweetButton(Button newButton) {
-    	tweetButton = newButton;
+    public void setTweetButton(ImageButton imageButton) {
+    	tweetButton = imageButton;
     
     	tweetButton.setOnClickListener(new OnClickListener() {			
 			public void onClick(View v) {
