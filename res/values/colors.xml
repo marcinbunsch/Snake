@@ -2,5 +2,6 @@
 <resources>
     <color name="scoreColor">#66FFFFFF</color>
     <color name="scoreShadowColor">#6600FF00</color>
+    <color name="twitterButtonBg">#00000000</color>
     
 </resources>
