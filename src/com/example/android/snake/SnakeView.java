@@ -22,6 +22,7 @@ import java.util.Random;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
@@ -97,6 +98,7 @@ public class SnakeView extends TileView {
 
     private ImageButton tweetButton;
 
+    private MediaPlayer biteSound ;
     
     /**
      * mSnakeTrail: a list of Coordinates that make up the snake's body
@@ -150,7 +152,9 @@ public class SnakeView extends TileView {
 
     private void initSnakeView() {
         setFocusable(true);
-
+        
+        biteSound = MediaPlayer.create(getContext(), R.raw.bite);
+        biteSound.setVolume(1.0f, 1.0f);
         Resources r = this.getContext().getResources();
         resetTiles(5);
         loadTile(RED_STAR, r.getDrawable(R.drawable.greenstar));
@@ -542,6 +546,9 @@ public class SnakeView extends TileView {
                 addRandomApple();
                 
                 incrementScore();
+                // play sound
+                biteSound.start();
+                
                 mMoveDelay *= 0.9;
 
                 growSnake = true;
